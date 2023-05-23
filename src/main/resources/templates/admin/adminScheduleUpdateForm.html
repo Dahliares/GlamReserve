@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" href="/css/global.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+  <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+  <script src="/js/admin.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <title>Admin Service Update</title>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<div class="m-4 text-center">
+  <h1>Modificar Horarios</h1>
+</div>
+<div class="m-3">
+  <button class="btn btn-warning" ><a href="/admin/adminSchedules">Volver atrás </a></button>
+</div>
+
+  <div class="container text-center">
+    <table class="table">
+      <form th:action="@{'/adminScheduleUpdate'}" th:object="${schedule}" method="post">
+      <tr>
+        <td><label for="id">Id:</label></td>
+        <td>
+          <input class="form-control" type="text" name="id" id="id" th:field="*{id}" readonly>
+        </td>
+      </tr>
+        <tr>
+          <td><label for="company">Local:</label></td>
+          <td>
+            <input class="form-control" type="text" name="company" id="company" th:field="*{company}"  >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="dayOfWeek">Día de la semana:</label></td>
+          <td>
+            <select class="form-control" name="dayOfWeek" id="dayOfWeek" th:field="*{dayOfWeek}">
+              <option value="1">Lunes</option>
+              <option value="2">Martes</option>
+              <option value="3">Miércoles</option>
+              <option value="4">Jueves</option>
+              <option value="5">Viernes</option>
+              <option value="6">Sábado</option>
+              <option value="7">Domingo</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="openTime1">Hora de apertura 1:</label></td>
+          <td>
+            <input class="form-control" type="text" name="openTime1" id="openTime1" th:field="*{openTime1}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="closeTime1">Hora de cierre 1:</label></td>
+          <td>
+            <input class="form-control" type="text" name="closeTime1" id="closeTime1" th:field="*{closeTime1}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="openTime1">Hora de apertura 2:</label></td>
+          <td>
+            <input class="form-control" type="text" name="openTime2" id="openTime2" th:field="*{openTime2}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="closeTime2">Hora de cierre 2:</label></td>
+          <td>
+            <input class="form-control" type="text" name="closeTime2" id="closeTime2" th:field="*{closeTime2}">
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <button class="btn btn-info" type="submit" >Actualizar Horario</button>
+          </td>
+        </tr>
+
+        </form>
+
+    </table>
+
+  </div>
+
+
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+
+</body>
+</html>

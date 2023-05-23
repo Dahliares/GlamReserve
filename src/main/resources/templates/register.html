@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de usuarios</title>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <link rel="stylesheet" href="/css/global.css"/>
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+
+
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<main class="mt-5 mb-5">
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <!--title-->
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center pb-5">
+                    <div class="title-section">
+                        <h2 class="">Registro de usuario</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 col-md-10 col-12 mx-auto">
+                    <div class="box-gray-beige">
+                        <form id="register-form" class="p-3 p-sm-5">
+                            <div>
+                                <p>Nombre de usuario:</p>
+                                <input type="text" id="username" name="username" class="form-control" required>
+                            </div>
+                            <div>
+                                <p>Nombre:</p>
+                                <input type="text" id="name" name="name" class="form-control" required>
+                            </div>
+                            <div>
+                                <p>Apellido:</p>
+                                <input type="text" id="lastname" name="lastname" class="form-control" required>
+                            </div>
+                            <div>
+                                <p>Email:</p>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            <div>
+                                <p>Contraseña:</p>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                            </div>
+                            <div>
+                                <p>Teléfono:</p>
+                                <input type="text" id="phone" name="phone" class="form-control" required>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn-custom w-100 mt-3 mb-3">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!--
+<section class="vh-120">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg_white text-black gradient-custom" style="border-color:grey; border-radius: 20% 20% 20% 20%;">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-md-5 mt-md-4 pb-5">
+                            <form id="register-form">
+                                <div class="form-row">
+                                    <div class="name">Nombre de usuario:</div>
+                                    <input type="text" id="username" name="username" class="form-control" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="name">Nombre:</div>
+                                    <input type="text" id="name" name="name" class="form-control" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="name">Apellido:</div>
+                                    <input type="text" id="lastname" name="lastname" class="form-control" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="name">Email:</div>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="name">Contraseña:</div>
+                                    <input type="password" id="password" name="password" class="form-control" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="name">Teléfono:</div>
+                                    <input type="text" id="phone" name="phone" class="form-control" required>
+                                </div>
+                                <div>
+                                    <button class="btn_submit" type="submit">Registrar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+
+
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+<script src="/js/register.js"></script>
+</body>
+</html>

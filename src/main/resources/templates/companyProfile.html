@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/index.js"></script>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+    <title>Perfil empresa</title>
+</head>
+<!--header-->
+<body class="d-flex flex-column justify-content-between vh-100">
+<nav th:replace="~{fragments/header.html :: frag_header}"></nav>
+<main class="mt-5 mb-5">
+    <section class="pt-5">
+        <div class="container">
+            <div class="row d-flex justify-content-between">
+                <div class="col-12 col-md-8 d-flex justify-content-center justify-content-md-start">
+                    <h2>Panel control - EMPRESA</h2>
+                </div>
+                <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end pt-3 pb-3 p-md-0">
+                    <a id="edit-user-link" th:href="@{/edit-user/{id}(id=${user.id})}"
+                       class="btn btn-warning mr-2">Editar perfil usuario</a> &nbsp; &nbsp;
+                    <a id="delete-user-link">
+                        <button class="btn btn-danger" type="submit" onclick="deleteUser()">Eliminar usuario
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <hr>
+    </div>
+
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="row d-flex flex-column flex-md-row justify-content-between">
+                <div class="col-12 col-md-3 d-flex flex-column">
+                    <button class="btn-custom mb-3" onclick="myData(this)">Mis Datos</button>
+                    <button class="btn-custom mb-3" onclick="myReserves(this)">Mi Agenda</button>
+                    <button class="btn-custom mb-3" onclick="mySchedule(this)">Mis Horarios</button>
+                    <button class="btn-custom mb-3" onclick="myServices(this)">Mis Servicios</button>
+                    <button class="btn-custom mb-0" onclick="mySubscription(this)">Mi Suscripción</button>
+                </div>
+
+                <!-- AREA PANEL -->
+                <!-- Mis datos -->
+                <div id="area-myData" class="col-12 col-md-9 mt-5 mt-md-0" style="display:block">
+                    <div class="card-body box-gray-light" >
+                        <h4 class="p-3 pb-3 ">Mis datos</h4>
+                        <div class="row d-flex justify-content-between gap-3 pt-2 pb-4 ">
+                            <input id="companyId" type="hidden" class="form-control" th:value="${company.id}" required>
+                            <div class="col-md-10 mx-auto">
+                                <h5 class="m-2">Nombre</h5>
+                                <input id="name" type="text" class="form-control" placeholder="Nombre" th:value="${company.name}" required>
+                            </div>
+                            <div class="col-md-10 mx-auto">
+                                <h5 class="m-2">Categoría</h5>
+                                <select id="category" class="form-control" th:value="${company.category}" required>
+                                    <option value="">Elige una opción</option>
+                                    <option value="peluqueria" th:selected="${company.category == 'peluqueria'}">Peluquería</option>
+                                    <option value="salondeunas" th:selected="${company.category == 'salondeunas'}">Salón de uñas</option>
+                                    <option value="depilacion" th:selected="${company.category == 'depilacion'}">Depilación</option>
+                                    <option value="masaje" th:selected="${company.category == 'masaje'}">Masaje</option>
+                                </select>
+                            </div>
+                            <div class="col-md-10 mx-auto">
+                                <h5 class="m-2">Dirección</h5>
+                                <input id="address" type="text" class="form-control" placeholder="Dirección" th:value="${company.address}" required>
+                            </div>
+                            <div class="col-md-10 mx-auto">
+                                <h5 class="m-2">Descripción</h5>
+                                <input id="description" type="text" class="form-control" placeholder="Descripción" th:value="${company.description}" required>
+                            </div>
+                            <div class="col-md-10 mx-auto">
+                                <h5 class="m-2">Imagen</h5>
+                                <img class="img-fluid single w-100 pb-3" th:src="${company.image}" />
+                                <input class="form-control" type="file" id="file-input">
+                            </div>
+                            <div class="col-md-4 mx-auto">
+                                <button class="btn-custom-2 w-100" onclick="saveCompany()">Guardar cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mi agenda -->
+                <div id="area-myReserves" class="col-12 col-md-9 mt-5 mt-md-0" style="display:none">
+                    <div class="card-body box-gray-light">
+                        <h4 class="p-3 pb-3 ">Mi agenda</h4>
+                        <div class="row d-flex justify-content-between gap-3 p-3 ">
+
+                            <div class="col-12">
+                                <label for="calendar"><p>Seleccionar fecha:</p></label>
+                                <div id="calendar"></div>
+                                <!--
+                                 <input type="text" id="calendar" class="form-control" placeholder="Seleccione una fecha">
+                                -->
+                                <h5 id="reservas-title" class="mt-4">Reservas para el día <span id="selected-date"></span>:</h5>
+                                <div class="table-responsive mt-3">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Hora</th>
+                                            <th scope="col">Servicio</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Teléfono</th>
+                                            <th scope="col">Eliminar</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="reserves-tbody"></tbody>
+                                    </table>
+                                </div>
+
+                                <h5 class="mt-4">Añadir reserva externa:</h5>
+
+                                <form id="add-external-reserve-form" class="mt-3">
+                                    <div class="mb-3">
+                                        <label for="external-date-time" class="form-label"><p>Fecha y hora:</p></label>
+                                        <input type="text" id="external-date-time" class="form-control" placeholder="Seleccione fecha y hora">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="external-service" class="form-label"><p>Servicio:</p></label>
+                                        <select id="external-service" class="form-select" th:attr="data-services=${services}">
+                                            <option th:each="service : ${services}" th:value="${service.id}" th:text="${service.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="external-name" class="form-label"><p>Nombre:</p></label>
+                                        <input type="text" id="external-name" class="form-control" placeholder="Introduzca el nombre">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="external-phone" class="form-label"><p>Teléfono:</p></label>
+                                        <input type="text" id="external-phone" class="form-control" placeholder="Introduzca el teléfono">
+                                    </div>
+                                    <!--<button type="submit" class="btn btn-warning">Añadir reserva externa</button>-->
+                                    <div class="col-md-4 mx-auto">
+                                        <button type="submit" class="btn-custom-2 w-100" >Añadir reserva externa</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mis Horarios -->
+                <div id="area-mySchedule" class="col-12 col-md-9 mt-5 mt-md-0" style="display:none">
+                    <div class="card-body box-gray-light" >
+                        <h4 class="p-3 pb-3">Mis horarios</h4>
+                        <div class="row d-flex justify-content-between gap-3 pt-2 pb-4">
+                            <th:block th:each="dayIteration : ${#numbers.sequence(1, 7)}">
+
+                                <!-- Day header -->
+                                <th:block th:switch="${dayIteration}">
+                                    <h4 class="text-center" th:case="1">Lunes</h4>
+                                    <h4 class="text-center" th:case="2">Martes</h4>
+                                    <h4 class="text-center" th:case="3">Miércoles</h4>
+                                    <h4 class="text-center" th:case="4">Jueves</h4>
+                                    <h4 class="text-center" th:case="5">Viernes</h4>
+                                    <h4 class="text-center" th:case="6">Sábado</h4>
+                                    <h4 class="text-center" th:case="7">Domingo</h4>
+                                </th:block>
+
+                                <!-- Cerrado checkbox -->
+                                <div class="d-flex d-flex justify-content-around ">
+                                    <label th:for="'closed-day' + ${dayIteration}">
+                                        <input type="checkbox" th:id="'closed-day' + ${dayIteration}" th:attr="onchange='toggleClosed(this, ' + ${dayIteration} + ', true)'">Cerrado
+                                    </label>
+                                    <label th:for="'closed-afternoon-day' + ${dayIteration}">
+                                        <input type="checkbox" th:id="'closed-afternoon-day' + ${dayIteration}" th:attr="onchange='toggleClosed(this, ' + ${dayIteration} + ', false)'">Cerrado por la tarde
+                                    </label>
+                                </div>
+
+
+                                <div th:id="'inputSchedules-' + ${dayIteration}"  class="col-12 d-flex justify-content-around flex-column flex-md-row">
+                                <th:block th:with="scheduleForDay=${scheduleUtils.getScheduleForDay(schedules, dayIteration)}">
+                                        <th:block th:each="schedule : ${scheduleForDay}">
+                                            <!-- Opening/closing time inputs -->
+                                            <th:block th:each="schedule : ${scheduleForDay}">
+                                                <!-- Opening/closing time inputs -->
+                                                <div>
+                                                    <h5 class="pt-2 pb-1">Apertura 1</h5>
+                                                    <input type="time" class="form-control validar-input" th:data-schedule-id="${schedule.id}" th:data-company-id="${company.id}" th:name="'openTime1-day' + ${dayIteration}" placeholder="" th:value="${#dates.format(schedule.openTime1, 'HH:mm')}" required="false" th:required="${closed != null ? !closed : false}">
+                                                </div>
+                                                <div>
+                                                    <h5 class="pt-2 pb-1">Cierre 1</h5>
+                                                    <input type="time" class="form-control validar-input" th:name="'closeTime1-day' + ${dayIteration}" placeholder="" th:value="${#dates.format(schedule.closeTime1, 'HH:mm')}" required="false" th:required="${closed != null ? !closed : false}">
+                                                </div>
+                                                <div>
+                                                    <h5 class="pt-2 pb-1">Apertura 2</h5>
+                                                    <input data-afternoon="true" type="time" class="form-control validar-input" th:name="'openTime2-day' + ${dayIteration}" placeholder="" th:value="${#dates.format(schedule.openTime2, 'HH:mm')}" required="false" th:required="${closed != null ? !closed : false}">
+                                                </div>
+                                                <div>
+                                                    <h5 class="pt-2 pb-1">Cierre 2</h5>
+                                                    <input data-afternoon="true" type="time" class="form-control validar-input" th:name="'closeTime2-day' + ${dayIteration}" placeholder="" th:value="${#dates.format(schedule.closeTime2, 'HH:mm')}" required="false" th:required="${closed != null ? !closed : false}">
+                                                </div>
+                                            </th:block>
+                                        </th:block>
+                                    </th:block>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <hr class="mt-5">
+                                    </div>
+                                </div>
+                            </th:block>
+
+                            <div class="col-md-4 mx-auto pt-5">
+                                <button class="btn-custom-2 w-100" onclick="saveSchedule()">Guardar cambios</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Mis Servicios -->
+                <div id="area-myServices" class="col-12 col-md-9 mt-5 mt-md-0" style="display:none">
+                    <div class="card-body box-gray-light" >
+                        <div class="p-3 pb-3 d-flex justify-content-between">
+                            <h4>Mis Servicios</h4>
+                            <button type="button" class="btn btn-success w-auto" onclick="addMyServices(this)">Nuevo Servicio</button>
+                        </div>
+                        <script th:inline="javascript">
+                            var counterServices = 0;
+                        </script>
+                        <div class="row d-flex justify-content-between gap-3 p-3">
+                            <th:block th:each="service, iteration : ${services}">
+                                <div class="p-3 pb-3 ">
+                                    <h4>Servicio número: <span th:text="${iteration.index + 1}"></span></h4>
+                                </div>
+
+                                <script th:inline="javascript">
+                                    counterServices++;
+                                </script>
+
+                                <div class="d-flex justify-content-between flex-column flex-lg-row">
+                                    <div>
+                                        <h5 class="pt-2 pb-1">Nombre</h5>
+                                        <input type="text" class="form-control" placeholder="Nombre" th:name="'nombre-' + ${iteration.index}"  th:value="${service.name}" required>
+                                    </div>
+                                    <div>
+                                        <h5 class="pt-2 pb-1">Precio</h5>
+                                        <input type="number" step="0.01" class="form-control" placeholder="Precio"  th:name="'precio-' + ${iteration.index}" th:value="${service.price}" required>
+                                    </div>
+                                    <div>
+                                        <h5 class="pt-2 pb-1">Duración</h5>
+                                        <input type="number" class="form-control" placeholder="Duración"  th:name="'duracion-' + ${iteration.index}" th:value="${service.duration}" readonly required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="pt-2 pb-1">Descripción</h5>
+                                    <textarea type="text" rows="3" cols="30" class="form-control" placeholder="Descripción"  th:name="'descripcion-' + ${iteration.index}" th:text="${service.description}" required></textarea>
+                                </div>
+                                <div class="d-flex justify-content-center gap-3 mt-3">
+                                    <button type="button" class="btn btn-warning w-auto" th:onclick="'saveService(\'' + ${service.id} + '\',\'' + ${iteration.index} + '\')'">Modificar</button>
+                                    <button type="button" class="btn btn-danger w-auto" th:onclick="'deleteService(\'' + ${service.id} + '\',\'' + ${iteration.index} + '\')'">Eliminar</button>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <hr class="mt-3">
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agregar Servicios -->
+                <div id="area-add-myServices" class="col-12 col-md-9 mt-5 mt-md-0" style="display:none">
+                    <div class="card-body box-gray-light" >
+                        <div class="p-3 pb-3 d-flex justify-content-between">
+                            <h4>Agregar Servicio</h4>
+                            <button type="button" class="btn btn-success w-auto" onclick="myServices(this)">Volver</button>
+                        </div>
+                        <div class="row d-flex justify-content-between gap-3 p-3">
+
+                                <div class="p-3 pb-3 ">
+                                    <h4>Nuevo</h4>
+                                </div>
+
+                                <div class="d-flex justify-content-between flex-column flex-lg-row">
+                                    <div>
+                                        <h5 class="pt-2 pb-1">Nombre</h5>
+                                        <input type="text" class="form-control" placeholder="Nombre" name="new-name" required>
+                                    </div>
+                                    <div>
+                                        <h5 class="pt-2 pb-1">Precio</h5>
+                                        <input type="number" step="0.01" class="form-control" placeholder="Precio" name="new-price" required>
+                                    </div>
+                                    <div>
+                                        <h5 class="pt-2 pb-1">Duración</h5>
+                                        <input type="number" class="form-control" placeholder="Duración" name="new-duration" value="1" readonly required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="pt-2 pb-1">Descripción</h5>
+                                    <textarea type="text" rows="3" cols="30" class="form-control" placeholder="Descripción" name="new-description" required></textarea>
+                                </div>
+
+                                <div class="col-md-4 mx-auto pt-5">
+                                    <button class="btn-custom-2 w-100" onclick="newService()">Guardar servicio</button>
+                                </div>
+
+
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mi Subscripción -->
+                <div id="area-mySubscription" class="col-12 col-md-9 mt-5 mt-md-0" style="display:none">
+                    <div class="card-body box-gray-light" >
+                        <h4 class="p-3 pb-3 ">Mi Suscripción</h4>
+                        <div class="row d-flex justify-content-between gap-3 pt-2 pb-4 ">
+                            <div class="col-12">
+                                <p class="p-3">
+                                    El mes de prueba gratuito permitirá a los clientes experimentar los beneficios de la suscripción sin compromiso alguno. Durante este período, los clientes podrán acceder a todas las funciones exclusivas del marketplace y decidir si desean continuar como miembros de la suscripción después de que termine el período de prueba.
+                                </p>
+                                <p class="p-3">
+                                    Si quieres prolongar tu suscripción ponte en contado con nosotros.
+                                </p>
+                                <a href="/contact">
+                                    <div class="col-md-4 mx-auto pt-5">
+                                        <button class="btn-custom-2 w-100" onclick="window.location.href = '/contact';">Contacto</button>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+<script src="/js/companyProfile.js"></script>
+<!--footer-->
+<footer th:replace="~{fragments/footer.html :: frag_footer}"></footer>
+</body>
+</html>

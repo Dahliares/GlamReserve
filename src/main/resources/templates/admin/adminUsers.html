@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+
+  <link rel="stylesheet" href="/css/admin.css"/>
+  <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+  <script src="/js/admin.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <title>Admin Users</title>
+  <style>
+    #titulo{ margin: 10px; font-size: 35px;}
+    a{text-decoration: none; }
+  </style>
+
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<div class="text-center">
+  <h1 id="titulo">PANEL DE ADMINISTRACIÓN DE USUARIOS</h1>
+</div>
+
+<div class="alert alert-success " th:if="${success != null}">
+  <label th:text="${success}"></label>
+</div>
+<div class="alert alert-danger" th:if="${error != null}">
+  <label th:text="${error}"></label>
+</div>
+
+<div class="m2">
+
+  <div class="m-3">
+    <button class="btn btn-warning" ><a href="/admin">Volver atrás </a></button>
+
+</div>
+
+
+  <div class="m-3">
+    <table class="table table-responsive datatable table-striped order-column display display-compact" style="width: 100%">
+      <thead>
+      <tr>
+        <th>Id <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Nombre <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Apellido <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Teléfono <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Email <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Nombre Usuario <i class="fa-solid fa-sort fa-xs"></i></th>
+
+        <th>Rol <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th class="text-center"><i class="fa-solid fa-pen-to-square"></i></th>
+        <th class="text-center"><i class="fa-solid fa-trash-can"></i></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.lastname}"></td>
+        <td th:text="${user.phone}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.username}"></td>
+
+        <td th:text="${user.roleId}"></td>
+
+
+
+        <td>
+          <a class="btn btn-info" th:href="@{'/adminUserUpdateForm/' + ${user.getId()}}">
+            <i class="fa-solid fa-pen-to-square fa-xs"></i></a>
+
+        </td>
+        <td>
+          <button th:attr="userid=${user.getId()}"  class="btn btn-danger botonDelete" type="button" >
+            <i class="fa-solid fa-trash-can fa-xs"></i></button>
+        </td>
+
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+<script>
+
+
+    var botonesdelete = document.getElementsByClassName("botonDelete");
+
+    for (let boton of botonesdelete) {
+
+    boton.addEventListener("click",borrar);
+
+  }
+
+    function borrar() {
+
+    var id = this.getAttribute("userid");
+
+    Swal.fire({
+    title: 'Estas seguro de que quieres borrar el usuario con Id ' + id + ' ?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+    window.location.href = "/deleteUser/" + id;
+  }
+  })
+
+  }
+
+
+    $('.datatable').DataTable({
+
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    });
+
+
+</script>
+</body>
+</html>

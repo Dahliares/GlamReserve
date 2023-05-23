@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" href="/css/global.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+  <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+  <script src="/js/admin.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <title>Admin user Update</title>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<div class="m-4 text-center">
+  <h1>Modificar Local</h1>
+</div>
+<div class="m-3">
+  <button class="btn btn-warning" ><a href="/admin/adminCompanies">Volver atrás </a></button>
+</div>
+
+  <div class="container text-center">
+    <table class="table">
+      <form id="update-form" th:object="${company}">
+      <tr>
+        <td><label for="id">Id:</label></td>
+        <td>
+          <input class="form-control" type="text" name="id" id="id" th:field="*{id}" readonly>
+        </td>
+      </tr>
+        <tr>
+          <td><label for="name">Nombre:</label></td>
+          <td>
+            <input class="form-control" type="text" name="name" id="name" th:field="*{name}" >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="address">Dirección:</label></td>
+          <td>
+            <input class="form-control" type="text" name="address" id="address" th:field="*{address}"  >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="category">Categoría:</label></td>
+          <td>
+            <select name="category" id="category" th:field="*{category}">
+              <option value="peluqueria">Peluquería</option>
+              <option value="salondeunas">Salón de uñas</option>
+              <option value="depilacion">Depilación</option>
+              <option value="masaje">Masaje</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="owner">Owner:</label></td>
+          <td>
+            <input class="form-control" type="text" name="owner" id="owner" th:field="*{owner}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="description">Descripción:</label></td>
+          <td>
+            <textarea class="form-control"  name="description" id="description" th:field="*{description}"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="file">Imagen:</label></td>
+          <td>
+            <img id="image" th:field="*{image}" th:src="${company.image}" />
+           Imagen nueva:  <input type="file" id="file" name="file" class="form-control">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button class="btn btn-info" type="submit" >Actualizar local</button>
+          </td>
+        </tr>
+
+        </form>
+
+    </table>
+
+  </div>
+
+
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+<script>
+
+  const updateForm = document.getElementById("update-form");
+  let input = document.getElementById("file");
+  input.addEventListener("change", fileRead, false);
+  let imgurl;
+
+    updateForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(updateForm);
+
+    const userData = {
+      id: formData.get("id"),
+      name: formData.get("name"),
+      category: formData.get("category"),
+      owner: {id: formData.get("owner")},
+      description: formData.get("description"),
+      image: imgurl,
+      address: formData.get("address")
+    };
+    fetch("/adminCompanyUpdate", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(userData),
+    })
+            .then((response) => {
+              if (response.ok) {
+                return response;
+              } /*else if (response.status == 404) {
+                    alert("Dirección no encontrada.")
+                } else {
+                    alert("Algo ha salido mal al registrar la empresa.");
+                }*/
+            })
+            .then(() => {
+              alert("local acutalizado con éxito");
+              window.location.href = '/admin/adminCompanies';
+            });
+  });
+  function fileRead(event) {
+    const file = event.target.files[0];
+    const fileReader = new FileReader();
+
+    fileReader.onload = function(event) {
+      imgurl =event.target.result
+      console.log(fileReader.result);
+    }
+    fileReader.readAsDataURL(file);
+
+  }
+</script>
+</body>
+</html>

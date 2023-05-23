@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" href="/css/global.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+  <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+  <script src="/js/admin.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <title>Admin Service Update</title>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<div class="m-4 text-center">
+  <h1>Modificar Servicio</h1>
+</div>
+<div class="m-3">
+  <button class="btn btn-warning" ><a href="/admin/adminServices">Volver atrás </a></button>
+</div>
+
+  <div class="container text-center">
+    <table class="table">
+      <form th:action="@{'/adminServiceUpdate'}" th:object="${service}" method="post">
+      <tr>
+        <td><label for="id">Id:</label></td>
+        <td>
+          <input class="form-control" type="text" name="id" id="id" th:field="*{id}" readonly>
+        </td>
+      </tr>
+        <tr>
+          <td><label for="name">Nombre:</label></td>
+          <td>
+            <input class="form-control" type="text" name="name" id="name" th:field="*{name}" >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="description">Descripción:</label></td>
+          <td>
+            <input class="form-control" type="text" name="description" id="description" th:field="*{description}"  >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="price">Precio:</label></td>
+          <td>
+            <input class="form-control" type="number" step="any" name="price" id="price" th:field="*{price}" >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="duration">Duración :</label></td>
+          <td>
+            <input class="form-control" type="number" name="duration" id="duration" th:field="*{duration}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="company">Local:</label></td>
+          <td>
+            <input class="form-control" type="text" name="company" id="company" th:field="*{company}">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button class="btn btn-info" type="submit" >Actualizar servicio</button>
+          </td>
+        </tr>
+
+        </form>
+
+    </table>
+
+  </div>
+
+
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+
+</body>
+</html>

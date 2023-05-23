@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${company.name}"></title>
+    <script src="/js/index.js"></script>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+    <!--header-->
+    <nav th:replace="~{fragments/header.html :: frag_header}"></nav>
+
+    <!--main-->
+    <main class="mt-5 mb-5">
+        <section class="pt-5 pb-5">
+            <div class="container">
+                <!--Name-->
+                <div class="row pb-5">
+                    <div class="col-12 d-flex justify-content-center ">
+                        <div class="title-section">
+                            <h2 class="" th:text="${company.name}">Nombre Empresa</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-between">
+                    <!--cover-->
+                    <div class="col-12 col-lg-8">
+                        <img th:src="${company.image}" class="w-100" alt="...">
+                    </div>
+                    <!--hours-->
+                    <div class="mb-5 mb-lg-0 col-12 col-lg-4 flex-column text-center">
+                        <div class="box-gray-light mt-5 mt-lg-0 pt-5">
+                            <h3>Horarios</h3>
+                            <div class="pt-3">
+                                <th:block th:each="dayIteration : ${#numbers.sequence(1, 7)}">
+                                    <th:block th:switch="${dayIteration}">
+                                        <h4 th:case="1">Lunes</h4>
+                                        <h4 th:case="2">Martes</h4>
+                                        <h4 th:case="3">Miércoles</h4>
+                                        <h4 th:case="4">Jueves</h4>
+                                        <h4 th:case="5">Viernes</h4>
+                                        <h4 th:case="6">Sábado</h4>
+                                        <h4 th:case="7">Domingo</h4>
+                                    </th:block>
+
+                                    <th:block th:with="scheduleForDay=${scheduleUtils.getScheduleForDay(schedules, dayIteration)}">
+                                        <p th:if="${#lists.isEmpty(scheduleForDay)}">Cerrado</p>
+                                        <th:block th:each="schedule : ${scheduleForDay}">
+                                            <p>
+                                                <th:block th:if="(${schedule.openTime1} != null) or (${schedule.closeTime1} != null) or (${schedule.openTime2} != null) or (${schedule.closeTime2} != null)">
+                                                    <span th:text="${#dates.format(schedule.openTime1, 'HH:mm')}"></span> - <span th:text="${#dates.format(schedule.closeTime1, 'HH:mm')}"></span>
+                                                    <th:block th:if="${schedule.openTime2 != null}" th:remove="tag">, </th:block>
+                                                    <span th:if="${schedule.openTime2 != null}" th:text="${#dates.format(schedule.openTime2, 'HH:mm')}"></span> <th:block th:if="${schedule.openTime2 != null}" th:remove="tag"> - </th:block> <span th:if="${schedule.openTime2 != null}" th:text="${#dates.format(schedule.closeTime2, 'HH:mm')}"></span>
+                                                </th:block>
+                                                <th:block th:if="(${schedule.openTime1} == null) and (${schedule.closeTime1} == null) and (${schedule.openTime2} == null) and (${schedule.closeTime2} == null)">Cerrado</th:block>
+                                            </p>
+                                        </th:block>
+                                    </th:block>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="row pt-5">
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="title-section">
+                            <h2 class="">Descripción</h2>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center pt-5">
+                        <div class="desc-section">
+                            <p th:text="${company.description}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service -->
+                <div class="row pt-5">
+                    <div class="col-12 flex-column text-center">
+                        <div class="box-gray-light pt-5 pb-5 d-grid gap-3">
+                            <h3>Servicios</h3>
+
+                            <div class="box-service p-3 d-flex justify-content-between align-items-center header-row">
+                                <h4 class="m-0 text-left w-25"><span class="title">Nombre</span></h4>
+                                <h4 class="m-0 text-left w-25"><span class="title">Precio</span></h4>
+                                <h4 class="m-0 text-left w-25"><span class="title">Seleccionar</span></h4>
+                            </div>
+
+                            <th:block th:each="service : ${services}">
+                                <label class="w-100" style="cursor: pointer;" onclick="selectService('service_' + ${service.id})">
+                                    <div class="box-service p-3 d-flex justify-content-between align-items-center">
+                                        <h4 class="m-0 text-left w-25" th:text="${service.name}"></h4>
+                                        <span class="w-25" th:text="${service.price + '€'}"></span>
+                                        <input class="w-25" type="radio" th:id="'service_' + ${service.id}" th:name="selectedService" th:value="${service.id}">
+                                    </div>
+                                </label>
+                            </th:block>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reserve -->
+                <div class="row pt-5">
+                    <div class="col-12 d-flex justify-content-center pb-5">
+                        <div class="title-section">
+                            <h2 class="">Realiza tu reserva</h2>
+                        </div>
+                    </div>
+
+                    <!--Calendar-->
+                    <div class="col-12 d-flex justify-content-center pb-5">
+                        <div id="datepicker"></div>
+                    </div>
+
+                    <!--Select time-->
+                    <div class="col-12 text-center pb-5">
+                        <h4 class="pb-1">Horario disponible</h4>
+                        <select id="selectTime" name="select" class="text-center w-100"></select>
+                    </div>
+
+                    <!-- Detaill -->
+                    <div class="col-12 d-flex justify-content-center pt-5">
+                        <div class="box-gray-light w-100 flex-column text-center pt-5 pb-5">
+                            <h3 class="pb-3">Detalle de tu reserva:</h3>
+                            <p id="data-service"></p>
+                            <p id="data-date"></p>
+                            <p id="data-hour"></p>
+                        </div>
+                    </div>
+                    <!--Button Reserve-->
+                    <div class="col-12 d-flex justify-content-center pt-5">
+                        <a class="btn-custom w-100 text-center" href="javascript:createReserve();">Realizar reserva</a>
+                    </div>
+
+                </div>
+
+                <div class="row pt-5 pb-5">
+                    <div class="col">
+                        <hr>
+                    </div>
+                </div>
+
+                <!-- Reviews -->
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center pb-5">
+                        <div class="title-section">
+                            <h2 class="">Reseñas</h2>
+                        </div>
+                    </div>
+
+                    <div th:each="review : ${reviews}" class="col-12 col-lg-6 d-flex justify-content-center pb-5">
+
+                        <div  class="box-gray-light w-100 flex-column text-center pt-2 pb-2">
+                            <h4 th:text="${review.getUser().getName()}"></h4>
+                            <div>
+                                <th:block th:each="n: ${#numbers.sequence(1, review.getScore())}">
+                                    <i class='fa-solid fa-star fa-xs' style='color: #c6c600'></i>
+                                </th:block>
+                            </div>
+
+
+                            <p th:text="${review.getComment()}"></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Comment reviews -->
+                <div class="row">
+                    <div class="col-12">
+                        <form id="form-review" class="d-flex flex-column justify-content-center">
+                            <label for="comentario" class="mb-3">Escribe tu reseña y puntua el servicio de este local:</label>
+                            <div class="d-flex flex-nowrap">
+                                <p>Puntuación:&nbsp</p>
+                                <span class="star-rating">
+                                    <i style='color: #c6c600' class="fas fa-star" data-rating="1"></i>
+                                    <i style='color: #c6c600' class="fas fa-star" data-rating="2"></i>
+                                    <i style='color: #c6c600' class="fas fa-star" data-rating="3"></i>
+                                    <i style='color: #c6c600' class="fas fa-star" data-rating="4"></i>
+                                    <i style='color: #c6c600' class="fas fa-star" data-rating="5"></i>
+                                </span>
+                            </div>
+                            <textarea rows="6" id="comentario" name="comentario" class="mb-5"></textarea>
+                            <a id="submit-review" class="btn-custom w-100 text-center" style="cursor:pointer">Compartir reseña</a>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <!--footer-->
+    <footer th:replace="~{fragments/footer.html :: frag_footer}"></footer>
+    <!-- hem de posar el js aquí perquè agafem algunes coses a través de thymeleaf-->
+    <script th:inline="javascript">
+        function formatDate(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+
+      return `${day}-${month}-${year}`;
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+    fetchAvailableSlots(new Date());
+    setTimeout(function() {
+    let valorSeleccionado = document.getElementById('selectTime').value;
+    $("#data-hour").html('Hora: ' + valorSeleccionado);
+}, 2000);
+    $("#data-date").html('Fecha: ' + formatDate(new Date()));
+       const unavailableDates = /*[[${unavailableDates}]]*/ [];
+       const disabledDates = unavailableDates.map(dateString => new Date(dateString));
+
+        flatpickr("#datepicker", {
+            dateFormat: "d-m-Y",
+            locale: "es",
+            disable: disabledDates,
+            inline: true,
+            defaultDate: "today",
+
+            onReady: function (dateObj, dateStr, instance) {
+                const $disabledDates = instance.days.querySelectorAll('.flatpickr-disabled');
+                $disabledDates.forEach(date => {
+                    date.style.backgroundColor = '#e67470';
+                });
+            },
+            onMonthChange: function (selectedDates, dateStr, instance) {
+                const $disabledDates = instance.days.querySelectorAll('.flatpickr-disabled');
+                $disabledDates.forEach(date => {
+                    date.style.backgroundColor = '#e67470';
+                });
+            },
+            onChange: async function (selectedDates, dateStr) {
+                $("#data-date").html('Fecha: ' + dateStr);
+                if (selectedDates.length > 0) {
+                    await fetchAvailableSlots(selectedDates[0]);
+                }
+            }
+        });
+
+        async function fetchAvailableSlots(date) {
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const day = ('0' + date.getDate()).slice(-2);
+            const dateValue = `${year}-${month}-${day}`;
+            let companyId = parseInt([[${company.id}]]);
+            const response = await fetch(`/company/${companyId}/availableSlots?date=${dateValue}`);
+
+            if (response.ok) {
+                const timeSlots = await response.json();
+                const select = document.querySelector('[name="select"]');
+                select.innerHTML = '';
+
+                timeSlots.forEach(timeSlot => {
+                    const time = timeSlot.substring(0, 5);
+                    const optionElement = document.createElement('option');
+                    optionElement.textContent = time;
+                    select.appendChild(optionElement);
+                });
+            } else {
+                console.error('Error al recoger horarios:', response.status);
+            }
+        }
+
+        $('input[name="selectedService"]').click(function() {
+            var selectedService = this.parentNode.firstElementChild.textContent;
+            $("#data-service").html('Servicio: ' + selectedService);
+        });
+
+        $("#selectTime").change(function(){
+            let valorSeleccionado = $(this).val();
+            $("#data-hour").html('Hora: '+ valorSeleccionado);
+        });
+
+        $('#submit-review').click(function(e) {
+          e.preventDefault();
+          $('#form-review').submit();
+        });
+
+    });
+</script>
+    <script>
+    function selectService(serviceId) {
+    var radioInput = document.getElementById(serviceId);
+    radioInput.checked = true;
+}
+    function createReserve() {
+        let userId = localStorage.getItem("userid");
+        if(userId == null || userId == ""){
+            alert("Debes iniciar sesión para hacer una reserva");
+            return;
+        }
+        let selectedServiceId = $('input[name="selectedService"]:checked').val();
+
+        let selectedDate = document.getElementById('datepicker').value;
+        const dateParts = selectedDate.split("-");
+        const selectElement = document.getElementById("selectTime");
+        const selectedTime = selectElement.options[selectElement.selectedIndex].value;
+        const hours = parseInt(selectedTime.substring(0, 2));
+        const minutes = parseInt(selectedTime.substring(3, 5));
+        let date = new Date();
+        date.setHours(hours, minutes, 0, 0);
+        const timezoneOffsetHours = date.getTimezoneOffset() / 60;
+        date.setHours(date.getHours() + timezoneOffsetHours);
+        const newHours = (date.getHours() < 10 ? '0' : '') + date.getHours();
+        const newMinutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+        const newTime = `${newHours}:${newMinutes}`;
+
+        selectedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T${newTime}:00`;
+        const inputDate = new Date(selectedDate);
+        const currentDate = new Date();
+        if (inputDate < currentDate) {
+            alert("La fecha y hora no pueden ser en el pasado.");
+            return;
+          }
+
+
+        let companyId = parseInt([[${company.id}]]);
+
+        let reserve = {
+            user: {
+                id: userId,
+            },
+            company: {
+                id: companyId,
+            },
+            date: selectedDate,
+            service: {
+                id: selectedServiceId,
+            },
+        };
+
+        if (userId && companyId && selectedDate && selectedServiceId) {
+                fetch("/reserve", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem('authToken')},
+                body: JSON.stringify(reserve),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response;
+                    } else {
+                        alert("Algo ha salido mal al hacer la reserva.");
+                    }
+                })
+                .then((data) => {
+                    window.location.href = `/main/${userId}`;
+                })
+                .catch((error) => {
+                    alert("Algo ha salido mal al hacer la reserva.");
+                });
+        } else {
+            alert("Por favor rellena todos los campos necesarios.");
+        }
+    }
+</script>
+
+    <script>
+    let score = 0;
+    const stars = document.querySelectorAll(".star-rating i");
+
+    stars.forEach((star) => {
+        star.addEventListener("click", () => {
+            score = parseInt(star.getAttribute("data-rating"));
+            stars.forEach((s, index) => {
+                if (index < score) {
+                    s.classList.add("fas");
+                    s.classList.remove("far");
+                } else {
+                    s.classList.add("far");
+                    s.classList.remove("fas");
+                }
+            });
+        });
+    });
+
+    if(score == 0){score = 5;}
+    document.getElementById("submit-review").addEventListener("click", () => {
+        const userId = localStorage.getItem("userid");
+        if(userId == null || userId == ""){
+            alert("Debes iniciar sesión para hacer un comentario");
+            return;
+        }
+        const comentario = document.getElementById("comentario").value;
+        const companyId = parseInt([[${company.id}]]);
+
+        const reviewData = {
+          user: { id: userId },
+          company: { id: companyId },
+          score: score,
+          comment: comentario
+        };
+
+        fetch("/review/create", {
+          method: "POST",
+          headers: {
+            "Authorization": localStorage.getItem('authToken'),
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(reviewData)
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                alert("Algo ha salido mal al enviar la reseña.");
+            }
+        })
+        .then((data) => {
+            console.log(data);
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

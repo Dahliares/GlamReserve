@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de empresas</title>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <link rel="stylesheet" href="/css/global.css"/>
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+    <script src="/js/global.js"></script>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="~{fragments/header.html :: frag_header}"></nav>
+
+<main class="mt-5 mb-5">
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <!--title-->
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center pb-5">
+                    <div class="title-section">
+                        <h2 class="">Registro de empresa</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 col-md-10 col-12 mx-auto">
+                    <div class="box-gray-beige">
+                        <form id="register2-form" enctype="multipart/form-data" class="p-3 p-sm-5">
+                            <div>
+                                <p>Nombre de la empresa:</p>
+                                <input type="text" id="name" name="name" class="form-control" required>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-9 col-12">
+                                        <p>Calle:</p>
+                                        <input type="text" id="calle" name="calle" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-3 col-12 mt-3 mt-md-0">
+                                        <p>Número:</p>
+                                        <input type="number" id="numero" name="numero" class="form-control" required min="1">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-4 col-12">
+                                        <p>C.P.:</p>
+                                        <input type="text" id="cp" name="cp" class="form-control" required maxlength="5" minlength="5">
+                                    </div>
+                                    <div class="col-md-8 col-12 mt-3 mt-md-0">
+                                        <p>Localidad:</p>
+                                        <input type="text" id="localidad" name="localidad" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p>Categoría:</p>
+                                <select name="category" id="category" class="w-100">
+                                    <option value="peluqueria">Peluquería</option>
+                                    <option value="salondeunas">Salón de uñas</option>
+                                    <option value="depilacion">Depilación</option>
+                                    <option value="masaje">Masaje</option>
+                                </select>
+                            </div>
+                            <div>
+                                <p>Descripción:</p>
+                                <textarea rows="7" type="text" id="description" name="description" class="form-control"></textarea>
+                            </div>
+                            <div>
+                                <p>Sube una imagen de tu local:</p>
+                                <input type="file" id="file" name="file" class="form-control">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn-custom w-100 mt-3 mb-3">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!--footer-->
+<footer th:replace="~{fragments/footer.html :: frag_footer}"></footer>
+<script src="js/register2.js"></script>
+</body>
+</html>

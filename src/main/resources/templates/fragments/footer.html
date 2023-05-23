@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<footer th:fragment="frag_footer" class="pt-3 pb-3 mt-auto py-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 text-center mb-3">
+        <a><img src="/img/GRblancosinletras.png"  style="width: 100px; height: 100px"/></a>
+      </div>
+      <div class="col-12 d-flex justify-content-center mb-3">
+
+
+        <h5>Síguenos en nuestras redes</h5>
+      </div>
+      <div class="col-12">
+        <div id="rrss" class="d-flex justify-content-center">
+          <a href=""><i class="fa-brands fa-instagram"></i></a>
+          <a href=""><i class="fa-brands fa-youtube"></i></a>
+          <a href=""><i class="fa-brands fa-twitter"></i></a>
+          <a href=""><i class="fa-brands fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--btn navbar icon -->
+  <script>
+      let btnNav = document.getElementById('btn-nav');
+      btnNav.textContent = '';
+      let iconNav = document.createElement('i');
+      iconNav.className = 'fa-solid fa-bars';
+      btnNav.appendChild(iconNav);
+  </script>
+  <script src="/js/global.js"></script>
+</footer>
+
+</html>

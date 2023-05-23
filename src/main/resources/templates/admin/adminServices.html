@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+
+  <link rel="stylesheet" href="/css/admin.css"/>
+  <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+  <script src="/js/admin.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <title>Admin Users</title>
+  <style>
+    #titulo{ margin: 10px; font-size: 35px;}
+    a{text-decoration: none; }
+  </style>
+
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<div class="text-center">
+  <h1 id="titulo">PANEL DE ADMINISTRACIÓN DE SERVICIOS</h1>
+</div>
+
+<div class="alert alert-success " th:if="${success != null}">
+  <label th:text="${success}"></label>
+</div>
+<div class="alert alert-danger" th:if="${error != null}">
+  <label th:text="${error}"></label>
+</div>
+
+<div class="m2">
+  <!--<dialog id="modaladdservice">
+  <table class="table">
+  <tr>
+    <td >Auto ID</td>
+    <form th:action="@{/adminServiceAdd}" th:object="${service}" method="post">
+      <td>
+        <input class="form-control" type="text" name="name"  th:field="*{name}" placeholder="name">
+      </td>
+      <td>
+        <input class="form-control" type="text" name="description"  th:field="*{description}" placeholder="description" >
+      </td>
+      <td>
+        <input class="form-control" type="number" step="any" name="price" th:field="*{price}" placeholder="price">
+      </td>
+      <td>
+        <input class="form-control" type="number" name="duration"  th:field="*{duration}" placeholder="duration">
+      </td>
+      <td>
+        <input class="form-control" type="text" name="company"  th:field="*{company}" placeholder="companyId" >
+      </td>
+      <td colspan="2">
+        <button class="btn btn-info" type="submit">Add Servicer</button>
+        <button class="btn btn-warning" onclick="window.modaladdservice.close()">Cerrar</button>
+      </td>
+    </form>
+
+  </tr>
+  </table>
+  </dialog>-->
+
+  <div class="m-3">
+    <button class="btn btn-warning" ><a href="/admin">Volver atrás </a></button>
+ <!-- <button class="btn btn-success" onclick="window.modaladdservice.showModal()">Add Service</button>-->
+</div>
+
+
+  <div class="m-3">
+    <table class="table table-responsive datatable table-striped order-column display display-compact" style="width: 100%">
+      <thead>
+      <tr>
+        <th>Id <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Nombre <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Descripción <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Precio <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Duracion <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th>Local <i class="fa-solid fa-sort fa-xs"></i></th>
+        <th class="text-center"><i class="fa-solid fa-pen-to-square"></i></th>
+        <th class="text-center"><i class="fa-solid fa-trash-can"></i></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr th:each="service : ${services}">
+        <td th:text="${service.id}"></td>
+        <td th:text="${service.name}"></td>
+        <td th:text="${service.description}"></td>
+        <td th:text="${service.price} + '&nbsp €'"></td>
+        <td th:text="${service.duration} + '&nbsp hora'"></td>
+        <td th:text="${service.company} == null ? ' ' : '(' + ${service.company.id} + ') ' + ${service.company.name}" ></td>
+       <td>
+          <a class="btn btn-info" th:href="@{'/adminServiceUpdateForm/' + ${service.getId()}}">
+            <i class="fa-solid fa-pen-to-square fa-xs"></i></a>
+
+        </td>
+        <td>
+          <button th:attr="serviceid=${service.getId()}"  class="btn btn-danger botonDelete" type="button" >
+            <i class="fa-solid fa-trash-can fa-xs"></i></button>
+        </td>
+
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+<script>
+
+
+    var botonesdelete = document.getElementsByClassName("botonDelete");
+
+    for (let boton of botonesdelete) {
+
+    boton.addEventListener("click",borrar);
+
+  }
+
+    function borrar() {
+
+    var id = this.getAttribute("serviceid");
+
+    Swal.fire({
+    title: 'Estas seguro de que quieres borrar el servicio con Id ' + id + ' ?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+    window.location.href = "/deleteService/" + id;
+  }
+  })
+
+  }
+
+
+    $('.datatable').DataTable({
+
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="stylesheet" href="/css/admin.css"/>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+    <script src="/js/admin.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <title>Actualizar datos de usuario</title>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<div class="m-4 text-center">
+    <h1>Modificar Usuario</h1>
+</div>
+<div class="m-3">
+    <button class="btn btn-warning" ><a href="/main">Volver atrás </a></button>
+</div>
+
+<div class="container text-center">
+    <table class="table">
+        <form id="editUserForm" th:object="${user}" method="POST" enctype="multipart/form-data">
+            <tr>
+                <td><label for="id">Id:</label></td>
+                <td>
+                    <input class="form-control" type="text" name="id" id="id" th:field="*{id}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="nombre">Nombre:</label></td>
+                <td>
+                    <input class="form-control" type="text" name="name" id="nombre" th:field="*{name}" >
+                </td>
+            </tr>
+            <tr>
+                <td><label for="apellido">Apellidos:</label></td>
+                <td>
+                    <input class="form-control" type="text" name="lastname" id="apellido" th:field="*{lastname}"  >
+                </td>
+            </tr>
+            <tr>
+                <td><label for="telefono">Teléfono:</label></td>
+                <td>
+                    <input class="form-control" type="text" name="phone" id="telefono" th:field="*{phone}" >
+                </td>
+            </tr>
+            <tr>
+                <td><label for="correo">Email:</label></td>
+                <td>
+                    <input class="form-control" type="text" name="email" id="correo" th:field="*{email}"  required>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="usuario">Nombre usuario:</label></td>
+                <td>
+                    <input class="form-control" type="text" name="username" id="usuario" th:field="*{username}"  required>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="contra">Contraseña:</label></td>
+                <td>
+                    <input class="form-control" type="password" name="password" id="contra" value="" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-info" type="submit" >Actualizar usuario</button>
+                </td>
+            </tr>
+
+        </form>
+
+    </table>
+
+</div>
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+<script>
+document.getElementById('editUserForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    const authToken = localStorage.getItem('authToken');
+
+    fetch('/user/edit', {
+        Authorization: localStorage.getItem('authToken'),
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Authorization': authToken
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('No estás autorizado para editar este usuario.');
+        }
+    })
+    .then(data => {
+        alert("Usuario actualizado con exito");
+        window.location.href = '/main/' + localStorage.getItem("userid");
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+});
+</script>
+
+
+</body>
+</html>

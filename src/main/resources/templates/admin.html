@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <link rel="stylesheet" href="/css/admin.css"/>
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+    <script src="/js/admin.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <title>Panel de administración</title>
+    <style>
+        #titulo{ margin: 10px; font-size: 35px;}
+        a{text-decoration: none; }
+    </style>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+<div class="text-center">
+    <h1 id="titulo">PANEL DE ADMINISTRACIÓN</h1>
+</div>
+
+<main class="mt-5 mb-5">
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 mx-auto d-flex flex-column gap-3">
+                    <a class="btn-custom w-100 text-center" href="/admin/adminUsers">Usuarios</a>
+                    <a class="btn-custom w-100 text-center" href="/admin/adminCompanies">Locales</a>
+                    <a class="btn-custom w-100 text-center" href="/admin/adminRoles">Roles</a>
+                    <a class="btn-custom w-100 text-center" href="/admin/adminServices">Servicios</a>
+                    <a class="btn-custom w-100 text-center" href="/admin/adminReserves">Reservas</a>
+                    <a class="btn-custom w-100 text-center" href="/admin/adminSchedules">Horarios</a>
+                    <a class="btn-custom w-100 text-center" href="/admin/adminContacts">Contactos</a>
+                    <a class="btn-custom w-100 text-center" href="/admin/adminReviews">Reseñas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Glam Reserve</title>
+    <script src="/js/index.js"></script>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+    <!--header-->
+    <nav th:replace="~{fragments/header.html :: frag_header}"></nav>
+
+    <!--main-->
+    <main class="mt-5 mb-5">
+        <section class="pt-5 pb-5">
+            <div class="container">
+                <!--title category-->
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center pb-5">
+                        <div class="title-section">
+                            <h2 class="">Categorías</h2>
+                        </div>
+                    </div>
+                </div>
+                <!--items category-->
+                <div id="category-items" class="row">
+                    <div class="col-6 col-lg-3 d-flex justify-content-center p-3">
+                        <div class="category-item">
+                            <div class="category">
+                                <a href="/search?category=peluqueria"><i class="fa-solid fa-scissors"></i></a>
+                            </div>
+                            <div class="title-category">
+                                <h3>Peluquería</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 d-flex justify-content-center p-3">
+                        <div class="category-item">
+                            <div class="category">
+                                <a href="/search?category=salondeunas"><i class="fa-solid fa-hand"></i></a>
+                            </div>
+                            <div class="title-category">
+                                <h3>Salón de uñas</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 col col-sm-6 col-lg-3 d-flex justify-content-center">
+                        <div class="category-item">
+                            <div class="category">
+                                <a href="/search?category=depilacion"><i class="fa-solid fa-feather-pointed"></i></a>
+                            </div>
+                            <div class="title-category">
+                                <h3>Depilación</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 col col-sm-6 col-lg-3 d-flex justify-content-center">
+                        <div class="category-item">
+                            <div class="category">
+                                <a href="/search?category=masaje"><i class="fa-solid fa-spa"></i></a>
+                            </div>
+                            <div class="title-category">
+                                <h3>Masajes</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pt-5 pb-5">
+            <div class="container">
+                <!--title info-->
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center pb-5">
+                        <div class="title-section">
+                            <h2 class="">Nuestro Marketplace</h2>
+                        </div>
+                    </div>
+                </div>
+                <!--description-->
+                <div id="info-description" class="row">
+                    <div class="col col-sm-12 col-lg-6 d-flex justify-content-center pb-5">
+                        <div class="img-cover w-100">
+                            <img src="/img/info-descripcion.jpg" class="img-fluid" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 pb-5">
+                        <h3 class="pt-3 pb-3">Descubre el mejor marketplace de estética: Peluquería, salón de uñas, depilación y masajes al alcance de tus manos</h3>
+                        <p>
+                            Nuestro marketplace de estética es el lugar perfecto para encontrar los mejores servicios de peluquería, salón de uñas, depilación y masajes. En nuestro sitio web, ofrecemos una amplia variedad de opciones para que nuestros clientes puedan encontrar exactamente lo que necesitan para sentirse y verse bien. Desde cortes de pelo modernos hasta tratamientos faciales relajantes, nuestro marketplace cuenta con empresas cuidadosamente seleccionadas que ofrecen servicios de alta calidad y atención personalizada.
+                        </p>
+                        <p>
+                            En nuestro marketplace, puedes buscar servicios por tipo de empresa, ubicación o precio. Cada empresa cuenta con una descripción detallada de sus servicios, tarifas y horarios de atención, para que puedas tomar una decisión informada. Además, también puedes leer reseñas de clientes anteriores para tener una idea de la experiencia que puedes esperar en cada empresa. Nuestro objetivo es proporcionar a nuestros clientes una experiencia fácil y conveniente para encontrar y reservar los servicios de estética que necesitan.
+                        </p>
+                    </div>
+                </div>
+                <!--services-->
+                <div id="info-services" class="row">
+                    <!--img cover-->
+                    <div class="col col-sm-12 col-lg-6 d-flex justify-content-center pb-5">
+                        <div class="img-cover w-100">
+                            <img src="img/info-services.jpg" class="img-fluid" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 pb-5">
+                        <h3 class="pt-3 pb-3">Los servicios de estética que no pueden faltar en tu rutina: Descubre las opciones que ofrece nuestro marketplace</h3>
+                        <p>
+                            En nuestro marketplace de estética, ofrecemos una amplia variedad de servicios para satisfacer las necesidades de nuestros clientes. Trabajamos con empresas de peluquería, salón de uñas, depilación y masajes que ofrecen servicios de alta calidad y a precios accesibles. Aquí te presentamos algunos de los servicios que puedes encontrar en nuestro sitio web:                        </p>
+                        </p>
+                        <ul>
+                            <li>Peluquería: cortes de cabello, tintes, peinados, tratamientos capilares, extensiones de cabello, entre otros.</li>
+                            <li>Salón de uñas: manicuras, pedicuras, esmaltado permanente, uñas acrílicas, diseño de uñas, entre otros.</li>
+                            <li>Depilación: depilación con cera, depilación láser, depilación eléctrica, entre otros.</li>
+                            <li>Masajes: masajes relajantes, masajes descontracturantes, masajes con piedras calientes, masajes terapéuticos, entre otros.</li>
+                        </ul>
+                        <p>
+                            Además de estos servicios, también ofrecemos opciones de paquetes combinados para que puedas disfrutar de varios servicios al mismo tiempo y ahorrar dinero. En nuestro marketplace de estética, estamos comprometidos en ofrecer la mejor selección de servicios para que nuestros clientes puedan sentirse y verse bien en todo momento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--footer-->
+    <footer th:replace="~{fragments/footer.html :: frag_footer}"></footer>
+</body>
+</html>

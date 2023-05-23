@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" href="/css/global.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+  <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+  <script src="/js/admin.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <title>Admin Service Update</title>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="fragments/header.html :: frag_header"></nav>
+
+<div class="m-4 text-center">
+  <h1>Modificar Reserva</h1>
+</div>
+<div class="m-3">
+  <button class="btn btn-warning" ><a href="/admin/adminReserves">Volver atrás </a></button>
+</div>
+
+  <div class="container text-center">
+    <table class="table">
+      <form th:action="@{'/adminReserveUpdate'}" th:object="${reserve}" method="post">
+      <tr>
+        <td><label for="id">Id:</label></td>
+        <td>
+          <input class="form-control" type="text" name="id" id="id" th:field="*{id}" readonly>
+        </td>
+      </tr>
+        <tr>
+          <td><label for="user">Usuario:</label></td>
+          <td>
+            <input class="form-control" type="text" name="user" id="user" th:field="*{user}" >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="company">Local:</label></td>
+          <td>
+            <input class="form-control" type="text" name="company" id="company" th:field="*{company}"  >
+          </td>
+        </tr>
+        <tr>
+          <td><label for="date">Fecha:</label></td>
+          <td>
+            <input class="form-control" type="text" name="date" id="date" th:field="*{date}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="userPhone">Teléfono del Usuario:</label></td>
+          <td>
+            <input class="form-control" type="text" name="userPhone" id="userPhone" th:field="*{userPhone}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="userName">Nombre del Usuario:</label></td>
+          <td>
+            <input class="form-control" type="text" name="userName" id="userName" th:field="*{userName}">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="service">Servicio:</label></td>
+          <td>
+            <input class="form-control" type="text" name="service" id="service" th:field="*{service}">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button class="btn btn-info" type="submit" >Actualizar Reserva</button>
+          </td>
+        </tr>
+
+        </form>
+
+    </table>
+
+  </div>
+
+
+
+<!--footer-->
+<footer th:replace="fragments/footer.html :: frag_footer"></footer>
+
+</body>
+</html>

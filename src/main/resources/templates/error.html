@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+    <title>Error</title>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+    <!--header-->
+    <nav th:replace="~{fragments/header.html :: frag_header}"></nav>
+
+    <div class="container d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 id="errorHeader" class="display-1"></h1>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    const serverErrorCode = parseInt([[${status}]]);
+    if(serverErrorCode == null || isNaN(serverErrorCode) || serverErrorCode == undefined){
+        const errorCode = getQueryParam('error');
+        const errorHeader = document.getElementById('errorHeader');
+
+        if (errorCode) {
+            errorHeader.textContent = `Error ${errorCode}`;
+        } else {
+            errorHeader.textContent = `Error 404`;
+        }
+    }else{
+        errorHeader.textContent = `Error ${serverErrorCode}`;
+    }
+
+});
+    </script>
+    
+    <!--footer-->
+    <footer class="mt-auto" th:replace="~{fragments/footer.html :: frag_footer}"></footer>
+</body>
+</html>

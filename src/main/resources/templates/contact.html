@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+    <script src="/js/contact.js"></script>
+    <title>Contacto</title>
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+<!--header-->
+<nav th:replace="~{fragments/header.html :: frag_header}"></nav>
+
+
+<main class="mt-5 mb-5">
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <!--title-->
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center pb-5">
+                    <div class="title-section">
+                        <h2 class="">Contacto</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 col-md-10 col-12 mx-auto pb-5">
+                    <div>
+                        <h3 class="text-center">
+                            Si tienes cualquier duda o sugerencia ponte en contacto con nosotros
+                            a través del siguiente formulario y un miembro de nuestro equipo
+                            atenderá tu solicitud en breve.
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-12 mx-auto">
+                    <div class="box-gray-beige">
+                        <form id="contact-form" class="p-3 p-md-5">
+                            <div>
+                                <p>Nombre:</p>
+                                <input type="text" id="name" name="name" class="form-control" required>
+                            </div>
+                            <div>
+                                <p>Email de contacto:</p>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            <div>
+                                <p>Teléfono de contacto:</p>
+                                <input type="text" id="phone" name="phone" class="form-control"/>
+                            </div>
+                            <div>
+                                <p>Mensaje:</p>
+                                <textarea rows="10" type="text" id="message" name="message" class="form-control"></textarea>
+                            </div>
+                            <div>
+                                <button class="btn-custom w-100" type="submit">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!--footer-->
+<footer th:replace="~{fragments/footer.html :: frag_footer}"></footer>
+</body>
+</html>

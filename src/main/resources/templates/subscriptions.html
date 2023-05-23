@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Suscripciones</title>
+    <script src="/js/index.js"></script>
+    <link rel="icon" type="image/x-icon" href="/img/GRlogosinletras.png">
+    <div th:replace="~{fragments/cdns.html :: frag_cdns}"></div>
+
+</head>
+<body class="d-flex flex-column justify-content-between vh-100">
+    <!--header-->
+    <nav th:replace="~{fragments/header.html :: frag_header}"></nav>
+
+    <!--main-->
+    <main class="mt-5 mb-5">
+        <section class="pt-5 pb-5">
+            <div class="container">
+                <!--title info-->
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center pb-5">
+                        <div class="title-section">
+                            <h2 class="">Únete a nosotros</h2>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center pb-5">
+                        <div class="desc-section">
+                            <p>
+                                Nuestros planes de suscripción ofrecen a los usuarios la flexibilidad de elegir entre una suscripción mensual o anual, dependiendo de sus necesidades y preferencias. Ambos planes ofrecen acceso completo a todas las características de nuestra plataforma, incluyendo soporte técnico y atención al cliente las 24 horas del día, los 7 días de la semana, actualizaciones regulares y nuevas características, y oportunidades de participar en eventos y promociones especiales.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--subscription-month-->
+                <div id="info-sub-month" class="row">
+                    <div class="col-12 col-lg-6 pb-5 d-flex flex-column justify-content-between">
+                        <h3 class="pt-3 pb-3">Plan Mensual</h3>
+                        <p>
+                            El Plan Mensual es ideal para los usuarios que quieren tener acceso a los beneficios de la plataforma sin comprometerse a largo plazo. Con este plan, los usuarios pueden disfrutar de una serie de beneficios, que incluyen:                        </p>
+                        <ul>
+                            <li>Acceso completo a todas las características de la plataforma.</li>
+                            <li>Soporte y atención al cliente las 24 horas del día, los 7 días de la semana.</li>
+                            <li>Actualizaciones regulares de la plataforma y nuevas características.</li>
+                            <li>Oportunidad de cancelar la suscripción en cualquier momento.</li>
+                        </ul>
+                        <p class="price-sub">10€/Mes</p>
+                    </div>
+                    <div class="col col-sm-12 col-lg-6 d-flex justify-content-center pb-5">
+                        <div class="img-cover w-100">
+                            <img src="img/month.jpg" class="img-fluid" alt="...">
+                        </div>
+                    </div>
+                </div>
+
+                <!--subscription-age-->
+                <div id="info-sub-age" class="row">
+                    <div class="col-12 col-lg-6 pb-5">
+                        <h3 class="pt-3 pb-3">Plan Anual</h3>
+                        <p>
+                            El Plan Anual es ideal para los usuarios que desean comprometerse a largo plazo y ahorrar dinero en su suscripción. Con este plan, los usuarios pueden disfrutar de los mismos beneficios que el Plan Mensual, pero con un descuento significativo en el precio. Los beneficios incluyen:
+                        </p>
+                        <ul>
+                            <li>Acceso completo a todas las características de la plataforma.</li>
+                            <li>Soporte y atención al cliente las 24 horas del día, los 7 días de la semana.</li>
+                            <li>Actualizaciones regulares de la plataforma y nuevas características.</li>
+                            <li>Oportunidad de cancelar la suscripción en cualquier momento.</li>
+                            <li>Descuento significativo en el precio de la suscripción en comparación con el Plan Mensual.</li>
+                        </ul>
+                        <p class="price-sub">80€/Anual</p>
+                    </div>
+                    <div class="col col-sm-12 col-lg-6 d-flex justify-content-center pb-5">
+                        <div class="img-cover w-100">
+                            <img src="/img/age.jpg" class="img-fluid" alt="...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <a class="btn-custom" href="/register">Mes de prueba</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+    </main>
+
+    <!--footer-->
+    <footer th:replace="~{fragments/footer.html :: frag_footer}"></footer>
+</body>
+</html>

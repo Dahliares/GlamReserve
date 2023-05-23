@@ -1,0 +1,192 @@
+* {
+  color: #3A3845;
+  font-family: "Open Sans", Helvetica, sans-serif 
+}
+@font-face {
+    font-family: 'Open Sans';
+    src: url('open-sans.eot');
+    src: local('icomoonregular'),
+         url('open-sans.woff') format('woff'),
+         url('open-sans.woff2') format('woff2');
+}
+#title-proyect {
+    width: 100%;
+    text-align: center;
+    }
+body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+body .contenedor {
+  flex: 1 0 20%;
+  padding: 20px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+.columna {
+    display: flex;
+    flex-direction: column;
+}
+.columna div, .items, .item {
+    display: flex;
+    gap: 5px;
+}
+.items div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.item-icon {
+    display: flex;
+    background: #F0EEED;
+    padding:20px;
+    flex: 1 1 auto;
+    text-align: center;
+}
+.colours {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.colours-container {
+    width:50%;
+}
+select {
+    background: white;
+    padding: 10px;
+    color: #3A3845;
+    border: 1px solid #3A3845;
+}
+input:focus {
+    background-color: #EADCA6;
+    outline: none;
+}
+
+select:focus {
+    background-color: #EADCA6;
+
+}
+i {
+    font-size:30px;
+}
+.title-h {
+    width: 100%;
+}
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+.columna div h2 {
+  margin-bottom: 20px;
+}
+.columna2 {
+  margin-top: 50px;
+  display: block;
+}
+.item p {
+  margin: 0px;
+}
+.items {
+  margin-right: 50px;
+  margin-bottom: 25px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.bola {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 20px;
+}
+
+.item div p {
+  margin-right: 20px;
+}
+
+.cabecera {
+  padding-left: 20px;
+  border-left-color: black;
+  border-left-style: solid;
+}
+.cabecera h1 {
+  margin: 0px;
+}
+h1 {
+  font-size: 28px;
+}
+.cabecera h2 {
+  margin: 0px !important;
+}
+h2 {
+  font-size: 24px;
+}
+.cabecera h3 {
+  margin: 0px;
+}
+h3 {
+  font-size: 20px;
+}
+.cabecera h4 {
+  margin: 0px;
+}
+.cabecera p {
+  margin: 0px;
+}
+h4 {
+  font-size: 16px;
+}
+h5 {
+  font-size: 14px;
+}
+h6 {
+  font-size: 12px;
+}
+p {
+    font-size: 16px;
+}
+a {
+  outline: none;
+  text-decoration: none;
+  color: #2e518b;
+}
+a.boton-default {
+  padding: 10px;
+  background-color: #3A3845;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+a.boton-hover {
+  border: 1px solid #3A3845;
+  padding: 10px;
+  background-color: white;
+  color: #3A3845;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.input input {
+  margin-right: 20px;
+}
+.error input {
+  background-color: #C36A2D;
+}
+
+.items img {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
